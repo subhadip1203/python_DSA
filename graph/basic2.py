@@ -12,7 +12,9 @@ class Graph:
         print("Graph Dict:", self.graph_dict)
 
     def get_paths(self, start, end, path=[]):
-        path.append(start)
+        
+        path = path + [start]
+        
         if start == end:
             return [path]
         else:
@@ -23,8 +25,9 @@ class Graph:
                         new_paths = self.get_paths(node, end, path)
                         for p in new_paths:
                             paths.append(p)
+                            
             return paths
-
+        
 
 
 if __name__ == "__main__":
