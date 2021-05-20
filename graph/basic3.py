@@ -1,57 +1,72 @@
-class bcolors:
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    
+# Python program to print all paths from a source to destination.
 
+from collections import defaultdict
 
-
+# This class represents a directed graph
+# using adjacency list representation
 class Graph:
-    def __init__(self,routes):
-        self.graph_dict={}
-        for start,end in routes:
-            if start in self.graph_dict:
-                self.graph_dict[start].append(end)
-            else:
-                self.graph_dict[start] = [end]
-        # print("graph data :",self.graph_dict)
 
-    def paths(self,start,end,path=[]):
-        trailing_path = path+[start]
-        print(trailing_path)
-        if start==end:
-            return [trailing_path]
-        else:
-            temp_path=[]
-            if start in self.graph_dict:                
-                for next in self.graph_dict:
-                    print("--------- Loop start -------------")
-                    if next not in trailing_path:
-                        return_data = self.paths(next,end,trailing_path)
-                        print(bcolors.OKGREEN ,"return data: ",return_data ,bcolors.ENDC )
-                        for p in return_data:
-                            temp_path.append(p)
-                    else:
-                        print(bcolors.FAIL ,next ,"is in :",trailing_path,bcolors.ENDC )
-                    print("--------- Loop ends -------------")
-            print("----------- end of step -------------")
-            return temp_path
+	def __init__(self, vertices):
+		# No. of vertices
+		self.V = vertices
+		
+		# default dictionary to store graph
+		self.graph = defaultdict(list)
+
+	# function to add an edge to graph
+	def addEdge(self, u, v):
+		self.graph[u].append(v)
+
+	'''A recursive function to print all paths from 'u' to 'd'.
+	visited[] keeps track of vertices in current path.
+	path[] stores actual vertices and path_index is current
+	index in path[]'''
+	def printAllPathsUtil(self, u, d, visited, path):
+
+		# Mark the current node as visited and store in path
+		visited[u]= True
+		path.append(u)
+
+		# If current vertex is same as destination, then print
+		# current path[]
+		if u == d:
+			print(path)
+		else:
+			# If current vertex is not destination
+			# Recur for all the vertices adjacent to this vertex
+			for i in self.graph[u]:
+				if visited[i]== False:
+					self.printAllPathsUtil(i, d, visited, path)
+					
+		# Remove current vertex from path[] and mark it as unvisited
+		path.pop()
+		visited[u]= False
+
+
+	# Prints all paths from 's' to 'd'
+	def printAllPaths(self, s, d):
+
+		# Mark all the vertices as not visited
+		visited =[False]*(self.V)
+
+		# Create an array to store paths
+		path = []
+
+		# Call the recursive helper function to print all paths
+		self.printAllPathsUtil(s, d, visited, path)
 
 
 
+# Create a graph given in the above diagram
+g = Graph(4)
+g.addEdge(0, 1)
+g.addEdge(0, 2)
+g.addEdge(0, 3)
+g.addEdge(2, 0)
+g.addEdge(2, 1)
+g.addEdge(1, 3)
 
-if __name__ == "__main__":
-    routes = [
-        ("Mumbai", "Paris"),
-        ("Mumbai", "Dubai"),
-        ("Paris", "Dubai"),
-        ("Paris", "New York"),
-        ("Dubai", "New York"),
-        ("New York", "Toronto"),
-    ]
-    
-route_graph = Graph(routes)
-start = "Mumbai"
-end = "New York"
-print(route_graph.paths(start,end))
+s = 2 ; d = 3
+print ("Following are all different paths from % d to % d :" %(s, d))
+g.printAllPaths(s, d)
+# This code is contributed by Neelam Yadav
