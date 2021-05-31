@@ -26,11 +26,15 @@ class Graph:
 		# Mark the current node as visited and store in path
 		visited[u]= True
 		path.append(u)
-
+		print(path)
+		print(visited)
+		print("-------------------------------")
 		# If current vertex is same as destination, then print
 		# current path[]
 		if u == d:
+			print("================================")
 			print(path)
+			print("================================")
 		else:
 			# If current vertex is not destination
 			# Recur for all the vertices adjacent to this vertex
@@ -41,7 +45,10 @@ class Graph:
 		# Remove current vertex from path[] and mark it as unvisited
 		path.pop()
 		visited[u]= False
+		print(path)
+		print(visited)
 
+		
 
 	# Prints all paths from 's' to 'd'
 	def printAllPaths(self, s, d):
