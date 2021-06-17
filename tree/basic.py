@@ -1,39 +1,36 @@
 class Node:
-
-    def __init__(self, data):
-
-        self.left = None
-        self.right = None
+    def __init__(self, data):        
+        self.head = None
         self.data = data
+        self.level = 0
+        self.children=[]
 
-    def insert(self, data):
-# Compare the new value with the parent node
-        if self.data:
-            if data < self.data:
-                if self.left is None:
-                    self.left = Node(data)
-                else:
-                    self.left.insert(data)
-            elif data > self.data:
-                if self.right is None:
-                    self.right = Node(data)
-                else:
-                    self.right.insert(data)
-        else:
-            self.data = data
+    def addChild(self,data):
+        self.children.append(data)
+        data.head = self
+        data.level=self.level+1
 
-# Print the tree
-    def PrintTree(self):
-        if self.left:
-            self.left.PrintTree()
-        print( self.data),
-        if self.right:
-            self.right.PrintTree()
+    def print(self):
+        space = '  '*self.level+' '
+        hyphen= '|-'
+        print(space+hyphen+str(self.data))
+        
+        if self.children:
+            for c in self.children:
+                c.print()
+    
+rootNode = Node(0)
 
-# Use the insert method to add nodes
-root = Node(12)
-root.insert(6)
-root.insert(14)
-root.insert(3)
+base1_1= Node(1)
+base1_2= Node(2)
+base1_3= Node(3)
+rootNode.addChild(base1_1)
+rootNode.addChild(base1_2)
+rootNode.addChild(base1_3)
 
-root.PrintTree()
+base2_4= Node(4)
+base2_5= Node(5)
+base1_1.addChild(base2_4)
+base1_1.addChild(base2_5)
+
+rootNode.print()
