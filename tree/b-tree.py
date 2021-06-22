@@ -30,15 +30,7 @@ class Node:
         if self.right:
             self.right.PrintTree()
 
-# Inorder traversal
-# Left -> Root -> Right
-    def inorderTraversal(self, root):
-        res = []
-        if root:
-            res = self.inorderTraversal(root.left)
-            res.append(root.data)
-            res = res + self.inorderTraversal(root.right)
-        return res
+
 
 root = Node(27)
 root.insert(14)
@@ -47,4 +39,4 @@ root.insert(10)
 root.insert(19)
 root.insert(31)
 root.insert(42)
-print(root.inorderTraversal(root))
+print(root.PrintTree())
