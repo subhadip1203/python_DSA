@@ -15,3 +15,4 @@ print(myObj) 		# it will give only memory address
 print(myObj.data)	# it will be a value
 print(myObj.next)	# it will give only memory address 
 print(myObj.next.data)	# it will be a value
+print(myObj.next.next)	# it will be a value
